@@ -15,7 +15,6 @@ function divElementHtmlTekst(sporocilo) {
 
 function procesirajVnosUporabnika(klepetApp, socket) {
   var sporocilo = $('#poslji-sporocilo').val();
-  //sporocilo = dodajSlike(sporocilo);
   sporocilo = dodajSmeske(sporocilo);
   var sistemskoSporocilo;
 
@@ -43,14 +42,11 @@ var re = new RegExp("(http(s?):/)(/[^/]+)+" + "\.(?:jpg|gif|png)");
 function dodajSlike(vhod){
   
     var posamezneBesede = vhod.split(" ");
-    //var re = new RegExp("(http(s?):/)(/[^/]+)+" + "\.(?:jpg|gif|png)");
     for (var i = 0; i < posamezneBesede.length; i++) {
       if(re.test(posamezneBesede[i])){
-        $("#sporocila").append("<img src='" + posamezneBesede[i] + "' style='width:200px;padding: 0px 0px 0px 20px;'/>");
-       // vhod = vhod.concat("<img src='" + posamezneBesede[i] + "' style='width:200px;padding: 0px 0px 0px 20px;'/>");
+        $("#sporocila").append("<img src='" + posamezneBesede[i] + "' style='width:200px;margin: 0px 0px 0px 20px;'/>");
       }
     }
-    //return vhod;
 }
 
 var vulgarneBesede = [];
@@ -94,6 +90,8 @@ $(document).ready(function() {
   socket.on('sporocilo', function (sporocilo) {
     var novElement = divElementEnostavniTekst(sporocilo.besedilo);
     $('#sporocila').append(novElement);
+    dodajSlike(sporocilo.besedilo);
+    $('#sporocila').scrollTop($('#sporocila').prop('scrollHeight'));
   });
   
   socket.on('kanali', function(kanali) {
