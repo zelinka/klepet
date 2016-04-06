@@ -44,10 +44,8 @@ function youtube(vhod){
         var samoUrl = posamezneBesede[i].substring(32, posamezneBesede[i].length);
         console.log(samoUrl);
         $("#sporocila").append("<iframe style='width:200px;height:150px;margin: 0px 0px 0px 20px;' src='https://www.youtube.com/embed/"+ samoUrl + "' allowfullscreen></iframe>");
-       // vhod = vhod.concat("<iframe style='width:200px;height:150px;margin: 0px 0px 0px 20px;' src='https://www.youtube.com/embed/"+ samoUrl + "' allowfullscreen></iframe>");
       }
     }
-    //return vhod;
 }
 
 var vulgarneBesede = [];
@@ -91,6 +89,8 @@ $(document).ready(function() {
   socket.on('sporocilo', function (sporocilo) {
     var novElement = divElementEnostavniTekst(sporocilo.besedilo);
     $('#sporocila').append(novElement);
+    youtube(sporocilo.besedilo);
+    $('#sporocila').scrollTop($('#sporocila').prop('scrollHeight'));
   });
   
   socket.on('kanali', function(kanali) {
