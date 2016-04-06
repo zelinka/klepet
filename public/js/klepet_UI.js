@@ -26,6 +26,7 @@ function procesirajVnosUporabnika(klepetApp, socket) {
     sporocilo = filtirirajVulgarneBesede(sporocilo);
     klepetApp.posljiSporocilo(trenutniKanal, sporocilo);
     $('#sporocila').append(divElementEnostavniTekst(sporocilo));
+    youtube(sporocilo);
     $('#sporocila').scrollTop($('#sporocila').prop('scrollHeight'));
   }
 
@@ -34,6 +35,20 @@ function procesirajVnosUporabnika(klepetApp, socket) {
 
 var socket = io.connect();
 var trenutniVzdevek = "", trenutniKanal = "";
+
+function youtube(vhod){
+  
+    var posamezneBesede = vhod.split(" ");
+    for (var i = 0; i < posamezneBesede.length; i++) {
+      if(posamezneBesede[i].substring(0, 32) == "https://www.youtube.com/watch?v="){
+        var samoUrl = posamezneBesede[i].substring(32, posamezneBesede[i].length);
+        console.log(samoUrl);
+        $("#sporocila").append("<iframe style='width:200px;height:150px;margin: 0px 0px 0px 20px;' src='https://www.youtube.com/embed/"+ samoUrl + "' allowfullscreen></iframe>");
+       // vhod = vhod.concat("<iframe style='width:200px;height:150px;margin: 0px 0px 0px 20px;' src='https://www.youtube.com/embed/"+ samoUrl + "' allowfullscreen></iframe>");
+      }
+    }
+    //return vhod;
+}
 
 var vulgarneBesede = [];
 $.get('/swearWords.txt', function(podatki) {
