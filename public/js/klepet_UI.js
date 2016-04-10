@@ -108,6 +108,14 @@ $(document).ready(function() {
     $('#sporocila').scrollTop($('#sporocila').prop('scrollHeight'));
   });
   
+  socket.on('dregljaj', function (dregljaj) {
+    var timeout;
+    $('#vsebina').jrumble();
+    $('#vsebina').trigger('startRumble');
+    clearTimeout(timeout);
+    timeout = setTimeout(function(){$('#vsebina').trigger('stopRumble');}, 1500)
+  });
+  
   socket.on('kanali', function(kanali) {
     $('#seznam-kanalov').empty();
 
