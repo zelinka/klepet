@@ -28,6 +28,7 @@ function procesirajVnosUporabnika(klepetApp, socket) {
     klepetApp.posljiSporocilo(trenutniKanal, sporocilo);
     $('#sporocila').append(divElementEnostavniTekst(sporocilo));
     dodajSlike(sporocilo);
+    youtube(sporocilo);
     $('#sporocila').scrollTop($('#sporocila').prop('scrollHeight'));
   }
 
@@ -45,6 +46,18 @@ function dodajSlike(vhod){
     for (var i = 0; i < posamezneBesede.length; i++) {
       if(re.test(posamezneBesede[i])){
         $("#sporocila").append("<img src='" + posamezneBesede[i] + "' style='width:200px;margin: 0px 0px 0px 20px;'/>");
+      }
+    }
+}
+
+function youtube(vhod){
+  
+    var posamezneBesede = vhod.split(" ");
+    for (var i = 0; i < posamezneBesede.length; i++) {
+      if(posamezneBesede[i].substring(0, 32) == "https://www.youtube.com/watch?v="){
+        var samoUrl = posamezneBesede[i].substring(32, posamezneBesede[i].length);
+        console.log(samoUrl);
+        $("#sporocila").append("<iframe style='width:200px;height:150px;margin: 0px 0px 0px 20px;' src='https://www.youtube.com/embed/"+ samoUrl + "' allowfullscreen></iframe>");
       }
     }
 }
@@ -91,6 +104,7 @@ $(document).ready(function() {
     var novElement = divElementEnostavniTekst(sporocilo.besedilo);
     $('#sporocila').append(novElement);
     dodajSlike(sporocilo.besedilo);
+    youtube(sporocilo.besedilo);
     $('#sporocila').scrollTop($('#sporocila').prop('scrollHeight'));
   });
   
